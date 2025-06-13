@@ -3,23 +3,40 @@ import { User } from "@/models/user";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
-  await connectDB();
-  const user = await User.findById(params.id);
-  if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  try {
+    await connectDB();
+
+    const user = await User.findById(params.id);
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(user);
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json(user);
 }
 
 export async function PUT(req, { params }) {
-  await connectDB();
-  const body = await req.json();
-  await User.findByIdAndUpdate(params.id, body);
-  return NextResponse.json({ message: "User updated" });
+  try {
+    await connectDB();
+
+    const body = await req.json();
+    await User.findByIdAndUpdate(params.id, body);
+
+    return NextResponse.json({ message: "User updated" });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
 
 export async function DELETE(req, { params }) {
-  await connectDB();
-  await User.findByIdAndDelete(params.id);
-  return NextResponse.json({ message: "User deleted" });
+  try {
+    await connectDB();
+
+    await User.findByIdAndDelete(params.id);
+    return NextResponse.json({ message: "User deleted" });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
