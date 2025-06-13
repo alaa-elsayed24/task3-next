@@ -1,6 +1,9 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { SessionProvider } from "next-auth/react";
+import ClientWrapper from "./ClientWrapper";
 // jAIQw1H50VcdYywr
 
 const geistSans = Geist({
@@ -22,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+       <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>
   );
