@@ -13,6 +13,7 @@ export async function GET(req, { params }) {
 
     return NextResponse.json(user);
   } catch (error) {
+    console.error("GET error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -26,6 +27,7 @@ export async function PUT(req, { params }) {
 
     return NextResponse.json({ message: "User updated" });
   } catch (error) {
+    console.error("PUT error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -37,6 +39,7 @@ export async function DELETE(req, { params }) {
     await User.findByIdAndDelete(params.id);
     return NextResponse.json({ message: "User deleted" });
   } catch (error) {
+    console.error("DELETE error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
